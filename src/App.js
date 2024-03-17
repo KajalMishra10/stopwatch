@@ -14,9 +14,15 @@ export default function App() {
         if (seconds === 59) {
           setMinutes((prevMinutes) => prevMinutes + 1);
           setSeconds(0);
-        } else {
+        } else if (seconds < 59) {
           setSeconds((prevSeconds) => prevSeconds + 1);
+        } else {
+          let m = seconds / 60;
+          let s = seconds % 60;
+          setMinutes((prevMinutes) => m);
+          setSeconds((prevSeconds) => s);
         }
+        
       }, 1000);
     }
 
