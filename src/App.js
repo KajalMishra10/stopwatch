@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 
 export default function App() {
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [totalSeconds, setTotalSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
@@ -11,22 +10,12 @@ export default function App() {
 
     if (isRunning) {
       intervalId = setInterval(() => {
-        if (seconds === 59) {
-          setMinutes((prevMinutes) => prevMinutes + 1);
-          setSeconds(0);
-        } else if (seconds < 59) {
-          setSeconds((prevSeconds) => prevSeconds + 1);
-        } else {
-          let m = seconds / 60;
-          let s = seconds % 60;
-          setMinutes((prevMinutes) => m);
-          setSeconds((prevSeconds) => s);
-        }
+        setTotalSeconds((prevTotalSeconds) => prevTotalSeconds + 1);
       }, 1000);
     }
 
     return () => clearInterval(intervalId);
-  }, [isRunning, seconds]);
+  }, [isRunning]);
 
   const startStopwatch = () => {
     setIsRunning(true);
@@ -38,9 +27,11 @@ export default function App() {
 
   const resetStopwatch = () => {
     setIsRunning(false);
-    setMinutes(0);
-    setSeconds(0);
+    setTotalSeconds(0);
   };
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
 
   return (
     <div className="App">
@@ -48,7 +39,7 @@ export default function App() {
       <p>
         Time:{" "}
         <span>
-          {String(minutes).padStart(1, "0")}:{String(seconds).padStart(2, "0")}
+          {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
         </span>
       </p>
       <div>
