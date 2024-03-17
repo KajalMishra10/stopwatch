@@ -39,7 +39,7 @@ export default function App() {
       <p>
         Time:{" "}
         <span>
-          {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+          {String(minutes).padStart(1, "0")}:{String(seconds).padStart(2, "0")}
         </span>
       </p>
       <div>
